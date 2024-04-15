@@ -1,6 +1,6 @@
 import express from "express";
 import { newCustomer, showCustomer, showCustomers, updateCustomer, deleteCustomer} from "./../controllers/CustomersController.js";
-import { newProduct, uploadImage } from "./../controllers/productsController.js"
+import { deleteProduct, newProduct, showProduct, showProducts, updateProduct, uploadImage } from "./../controllers/productsController.js"
 
 const router = express.Router()
 
@@ -31,6 +31,18 @@ router.get('/', (req, res) => {
 
     // New products
     router.post('/products', uploadImage, newProduct)
+
+    // Show all the products
+    router.get('/products', showProducts)
+
+    // Show a specific product by their id
+    router.get('/products/:idProduct', showProduct)
+
+    // Update a specific product
+    router.put('/products/:idProduct', uploadImage, updateProduct)
+
+    // Delete a specific product
+    router.delete('/products/:idProduct', deleteProduct)
 
 //#endregion 
 

@@ -67,3 +67,77 @@ export async function newProduct(req, res, next) {
         return next()
     }
 }
+
+export async function showProducts(req, res, next) {
+    try {
+        const products = await Products.find({})
+        res.json(products)
+    } catch (error) {
+        console.log(error)
+        res.json({message: error})
+        return next()
+    }
+}
+
+export async function showProduct(req, res, next) {
+
+    try {
+        const product = await Products.findById(req.params.idProduct)
+        res.json(product)
+
+    } catch (error) {
+        console.log(error)
+        res.json({message: 'That product does not exist'})
+        return next()
+    }
+}
+
+export async function updateProduct(req, res, next) {
+
+    try {
+
+        let newProduct = req.body
+
+        if(req.file?.filename) {
+            newProduct.image = req.file.filename
+        } else {
+            let previousOne = await Products.findById(req.params.idProduct)
+            newProduct.image = previousOne.image
+        }
+
+        const product = await Products.findOneAndUpdate(
+            { _id: req.params.idProduct},
+            newProduct, 
+            { new: true } //Bring the new updated product 
+        )
+
+        res.json(product)
+    } catch (error) {
+        console.log(error)
+        res.json({message: 'That product does not exist'})
+        return next()
+    }
+}
+
+export async function deleteProduct(req, res, next) {
+    try {
+        const product = await Products.findByIdAndDelete({_id: req.params.idProduct})
+
+        if(product.image) {
+            const previousImage =  fileURLToPath(new URL(`../uploads/${product.image}`, import.meta.url)) 
+
+            fs.unlink(previousImage, (error) => { // delete the image with filesystem
+                if(error) {
+                    console.log(error)
+                }
+                return;
+            })
+        }
+
+        res.json({message: 'The product have been deleted successfully'})
+    } catch (error) {
+        console.log(error)
+        res.json({message: 'That product does not exist'})
+        return next()
+    }
+}

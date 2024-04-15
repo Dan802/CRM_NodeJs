@@ -28,14 +28,15 @@ export async function showCustomers(req, res, next) {
 }
 
 export async function showCustomer(req, res, next) {
-    const customer = await Customers.findById(req.params.idCustomer)
-
-    if(!customer) {
-        res.json({message: 'This clients does not exist'})
+    
+    try {
+        const customer = await Customers.findById(req.params.idCustomer)
+        res.json(customer)
+    } catch (error) {
+        console.log(error)
+        res.json({message: 'That client does not exist'})
         return next()
     }
-
-    res.json(customer)
 }
 
 export async function updateCustomer(req, res, next) {
