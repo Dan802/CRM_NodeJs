@@ -3,6 +3,9 @@ import routes from "./routes/index.js";
 import mongoose from "mongoose";
 import bodyParser from "body-parser"
 
+// Cors allow a different client connects to the server
+import cors from "cors";
+
 const app = express()
 
 // connect to mongo
@@ -19,6 +22,9 @@ mongoose.connect('mongodb://localhost/restapis')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
+// Enable Cors
+app.use(cors())
+
 app.use('/', routes)
 
-app.listen(3000)
+app.listen(5000)

@@ -11,6 +11,7 @@ export async function newCustomer (req, res, next) {
 
     } catch (error) {
         console.log(error)
+        res.send(error)
         next()
     }
 }
@@ -52,6 +53,7 @@ export async function updateCustomer(req, res, next) {
 
     } catch (error) {
         console.log(error)
+        res.send(error)
         return next()
     }
 }

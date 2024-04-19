@@ -1,6 +1,7 @@
 import express from "express";
-import { newCustomer, showCustomer, showCustomers, updateCustomer, deleteCustomer} from "./../controllers/CustomersController.js";
+import { newCustomer, showCustomer, showCustomers, updateCustomer, deleteCustomer} from "../controllers/customersController.js";
 import { deleteProduct, newProduct, showProduct, showProducts, updateProduct, uploadImage } from "./../controllers/productsController.js"
+import { deleteOrder, newOrder, showOrder, showOrders, updateOrder } from "../controllers/ordersController.js";
 
 const router = express.Router()
 
@@ -45,5 +46,19 @@ router.get('/', (req, res) => {
     router.delete('/products/:idProduct', deleteProduct)
 
 //#endregion 
+
+//#region ordersController.js
+
+    router.post('/orders', newOrder)
+
+    router.get('/orders', showOrders)
+
+    router.get('/orders/:idOrder', showOrder)
+
+    router.put('/orders/:idOrder', updateOrder)
+
+    router.delete('/orders/:idOrder', deleteOrder)
+
+//#endregion
 
 export default router
