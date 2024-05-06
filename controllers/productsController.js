@@ -71,7 +71,13 @@ export async function newProduct(req, res, next) {
 export async function showProducts(req, res, next) {
     try {
         const products = await Products.find({})
-        res.json(products)
+
+        if(products.length > 0) {
+            res.json(products)
+        } else {
+            res.json({message: 'There are not products yet'})
+        }
+
     } catch (error) {
         console.log(error)
         res.json({message: error})
@@ -138,6 +144,20 @@ export async function deleteProduct(req, res, next) {
     } catch (error) {
         console.log(error)
         res.json({message: 'That product does not exist'})
+        return next()
+    }
+}
+
+export async function searchProduct(req, res, next) {
+
+    try {
+        const {query} = req.params
+
+        const product = await Products.find({name : new RegExp(query, 'i')})
+        res.json(product)
+        
+    } catch (error) {
+        console.log(error)
         return next()
     }
 }

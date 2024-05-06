@@ -25,6 +25,10 @@ app.use(bodyParser.urlencoded({extended: true}))
 // Enable Cors
 app.use(cors())
 
+// app routes
 app.use('/', routes)
+
+// public folder
+app.use(express.static('uploads'))
 
 app.listen(5000)

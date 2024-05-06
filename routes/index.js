@@ -1,63 +1,72 @@
 import express from "express";
 import { newCustomer, showCustomer, showCustomers, updateCustomer, deleteCustomer} from "../controllers/customersController.js";
-import { deleteProduct, newProduct, showProduct, showProducts, updateProduct, uploadImage } from "./../controllers/productsController.js"
+import { deleteProduct, newProduct, searchProduct, showProduct, showProducts, updateProduct, uploadImage } from "./../controllers/productsController.js"
 import { deleteOrder, newOrder, showOrder, showOrders, updateOrder } from "../controllers/ordersController.js";
+import {singUpUser, authUser} from "../controllers/usersController.js";
+import auth from '../middleware/auth.js' // middleware to protect routes
 
 const router = express.Router()
-
-router.get('/', (req, res) => {
-    res.send('inicio')
-})
 
 //#region CustomersController.js
 
     // Add new customers
-    router.post('/customers', newCustomer)
+    router.post('/customers', auth, newCustomer)
 
     // Get all the customers
-    router.get('/customers', showCustomers)
+    router.get('/customers', auth, showCustomers)
 
     // Show a specific customer
-    router.get('/customers/:idCustomer', showCustomer)
+    router.get('/customers/:idCustomer', auth, showCustomer)
 
     // update a specific customer
-    router.put('/customers/:idCustomer', updateCustomer)
+    router.put('/customers/:idCustomer', auth, updateCustomer)
 
     // Delete a specific customer
-    router.delete('/customers/:idCustomer', deleteCustomer)
+    router.delete('/customers/:idCustomer', auth, deleteCustomer)
 
 //#endregion
 
 //#region productsController.js
 
     // New products
-    router.post('/products', uploadImage, newProduct)
+    router.post('/products', auth, uploadImage, newProduct)
 
     // Show all the products
-    router.get('/products', showProducts)
+    router.get('/products', auth, showProducts)
 
     // Show a specific product by their id
-    router.get('/products/:idProduct', showProduct)
+    router.get('/products/:idProduct', auth, showProduct)
 
     // Update a specific product
-    router.put('/products/:idProduct', uploadImage, updateProduct)
+    router.put('/products/:idProduct', auth, uploadImage, updateProduct)
 
     // Delete a specific product
-    router.delete('/products/:idProduct', deleteProduct)
+    router.delete('/products/:idProduct', auth, deleteProduct)
+
+    // Search a product 
+    router.post('/products/search/:query', auth, searchProduct)
 
 //#endregion 
 
 //#region ordersController.js
 
-    router.post('/orders', newOrder)
+    router.post('/orders/new/:idUser', auth, newOrder)
 
-    router.get('/orders', showOrders)
+    router.get('/orders', auth, showOrders)
 
-    router.get('/orders/:idOrder', showOrder)
+    router.get('/orders/:idOrder', auth, showOrder)
 
-    router.put('/orders/:idOrder', updateOrder)
+    router.put('/orders/:idOrder', auth, updateOrder)
 
-    router.delete('/orders/:idOrder', deleteOrder)
+    router.delete('/orders/:idOrder', auth, deleteOrder)
+
+//#endregion
+
+//#region usersController.js
+
+    router.post('/create-account', singUpUser)
+
+    router.post('/log-in', authUser)
 
 //#endregion
 
