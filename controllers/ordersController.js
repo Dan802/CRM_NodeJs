@@ -23,7 +23,12 @@ export async function showOrders(req, res, next) {
             // model: 'Orders'
         })
 
-        res.json(orders)
+        if(orders.length > 0) {
+            res.json(orders)
+        } else {
+            res.json({message: 'There are no orders yet.'})
+        }
+
     } catch (error) {
         console.log(error)
         res.json({message: error})

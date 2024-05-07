@@ -20,7 +20,12 @@ export async function showCustomers(req, res, next) {
     try {
         
         const customers = await Customers.find({})
-        res.json(customers)
+
+        if(customers.length > 0) {
+            res.json(customers)
+        } else {
+            res.json({message: 'There are no customers yet.'})
+        }
 
     } catch (error) {
         console.log(error)

@@ -75,7 +75,7 @@ export async function showProducts(req, res, next) {
         if(products.length > 0) {
             res.json(products)
         } else {
-            res.json({message: 'There are not products yet'})
+            res.json({message: 'There are no products yet.'})
         }
 
     } catch (error) {
