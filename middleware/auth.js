@@ -6,10 +6,9 @@ export default async function auth(req, res, next){
     const authHeader = req.get('Authorization')
 
     if(!authHeader) {
-        const error = new Error('There is not Json Web Token')
-        error.statusCode = 401
-        res.json({message: 'There is no web token'})
-        throw error
+        res.status(401).json({message: 'There is no web token'})
+        return 
+        // throw error
     }
 
     // get the token
@@ -20,14 +19,20 @@ export default async function auth(req, res, next){
     try {
         reviewToken = jwt.verify(token, "OLIKÑJKMHHFTG")
     } catch (error) {
-        error.statusCode = 500
-        throw error
+        // error.statusCode = 500
+        console.log(error)
+        console.log()
+        console.log()
+        console.log('No authentize')
+        console.log()
+        console.log()
+        // throw error
     }
 
     if(!reviewToken) {
-        const error = new Error('No authentize')
-        error.statusCode = 401
-        throw error
+        res.status(500).json({message: 'No authentize'})
+        return 
+        // throw error
     }
 
     next()
