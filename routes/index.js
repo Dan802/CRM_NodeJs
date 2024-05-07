@@ -2,7 +2,7 @@ import express from "express";
 import { newCustomer, showCustomer, showCustomers, updateCustomer, deleteCustomer} from "../controllers/customersController.js";
 import { deleteProduct, newProduct, searchProduct, showProduct, showProducts, updateProduct, uploadImage } from "./../controllers/productsController.js"
 import { deleteOrder, newOrder, showOrder, showOrders, updateOrder } from "../controllers/ordersController.js";
-import {singUpUser, authUser} from "../controllers/usersController.js";
+import {singUpUser, authUser, token} from "../controllers/usersController.js";
 import auth from '../middleware/auth.js' // middleware to protect routes
 
 const router = express.Router()
@@ -67,6 +67,8 @@ const router = express.Router()
     router.post('/create-account', singUpUser)
 
     router.post('/log-in', authUser)
+
+    router.get('/token', auth, token)
 
 //#endregion
 

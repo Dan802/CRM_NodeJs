@@ -48,3 +48,7 @@ export async function authUser(req, res, next) {
         }
     }
 }
+
+export function token(req, res) {
+    res.json({message: true})
+}
