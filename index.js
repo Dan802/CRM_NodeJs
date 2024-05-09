@@ -13,6 +13,7 @@ dotenv.config({path: '.env'})
 mongoose.connect(process.env.DB_URL)
     .then(()=>{
         console.log("DB connection successful.");
+        console.log('**********************************');
     })
     .catch((err)=>{
         console.log(`DB connection error:${err}`);
@@ -24,6 +25,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 // public folder
+// Should be before Cors configuration
 app.use(express.static('uploads'))
 
 // Define the domins that are allow to receive requests (White List)
@@ -48,4 +50,10 @@ app.use(cors(corsOptions))
 // app routes
 app.use('/', routes)
 
-app.listen(5000)
+const port = process.env.PORT || 5000
+const host = process.env.HOST || '0.0.0.0'
+
+app.listen(port, host, () => {
+    console.log('The server is running successfully')
+    console.log('**********************************')
+})
