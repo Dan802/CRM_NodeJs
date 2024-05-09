@@ -2,14 +2,15 @@ import express from "express";
 import routes from "./routes/index.js";
 import mongoose from "mongoose";
 import bodyParser from "body-parser"
-
-// Cors allow a different client connects to the server
-import cors from "cors";
+import cors from "cors"; // Cors allow a different client connects to the server
+import dotenv from "dotenv";
 
 const app = express()
 
+dotenv.config({path: '.env'})
+
 // connect to mongo
-mongoose.connect('mongodb://localhost/restapis')
+mongoose.connect(process.env.DB_URL)
     .then(()=>{
         console.log("DB connection successful.");
     })
@@ -26,7 +27,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static('uploads'))
 
 // Define the domins that are allow to receive requests (White List)
-const whiteList = ['http://localhost:3000']
+const whiteList = [process.env.FRONTEND_URL]
 const corsOptions = {
     origin: (origin, callback) => {
         // check if the request is from a server that is in the white list 
