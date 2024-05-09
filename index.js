@@ -22,13 +22,29 @@ mongoose.connect('mongodb://localhost/restapis')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
+// public folder
+app.use(express.static('uploads'))
+
+// Define the domins that are allow to receive requests (White List)
+const whiteList = ['http://localhost:3000']
+const corsOptions = {
+    origin: (origin, callback) => {
+        // check if the request is from a server that is in the white list 
+        const exist = whiteList.some( domain => domain === origin)
+
+        if(exist) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
+
 // Enable Cors
-app.use(cors())
+// Allow a client to connect to another server for resource sharing
+app.use(cors(corsOptions))
 
 // app routes
 app.use('/', routes)
-
-// public folder
-app.use(express.static('uploads'))
 
 app.listen(5000)
