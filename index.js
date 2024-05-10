@@ -12,15 +12,16 @@ console.log('express app created')
 dotenv.config({path: '.env'})
 
 // connect to mongo
-mongoose.connect(process.env.DB_URL)
-    .then(()=>{
-        console.log("DB connection successful.");
-        console.log('**********************************');
-    })
-    .catch((err)=>{
-        console.log(`DB connection error:${err}`);
-    });
-
+(async () => {
+    await mongoose.connect(process.env.DB_URL)
+        .then(()=>{
+            console.log("DB connection successful.");
+            console.log('**********************************');
+        })
+        .catch((err)=>{
+            console.log(`DB connection error:${err}`);
+        });
+})()
 
 // Enable BodyParser
 app.use(bodyParser.json())
@@ -35,7 +36,8 @@ const whiteList = [process.env.FRONTEND_URL]
 const corsOptions = {
     origin: (origin, callback) => {
         // check if the request is from a server that is in the white list 
-        const exist = whiteList.some( domain => domain === origin)
+        // const exist = whiteList.some( domain => domain === origin)
+        const exist = true
 
         if(exist) {
             callback(null, true)
