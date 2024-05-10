@@ -1,4 +1,4 @@
-import Customers from "../models/Customers.js";
+import Customers from "./../models/Customers.js";
 
 export async function newCustomer (req, res, next) {
 
@@ -73,4 +73,3 @@ export async function deleteCustomer(req, res, next) {
         return next()
     }
 }
-

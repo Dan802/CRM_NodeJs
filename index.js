@@ -1,9 +1,10 @@
 import express from "express";
-import routes from "./routes/index.js";
 import mongoose from "mongoose";
 import bodyParser from "body-parser"
 import cors from "cors"; // Cors allow a different client connects to the server
 import dotenv from "dotenv";
+console.log('before importing routes')
+import routes from "./routes/index.js";
 
 const app = express()
 console.log('express app created')
