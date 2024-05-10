@@ -7,6 +7,10 @@ import auth from '../middleware/auth.js' // middleware to protect routes
 
 const router = express.Router()
 
+router.get('/', (req, res) => {
+    res.send('<a href="/juanfgonzalez.netlify.app">Hi, visit my portfolio clicking here.</a>')
+})
+
 //#region CustomersController.js
 
     // Add new customers
