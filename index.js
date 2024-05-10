@@ -3,16 +3,14 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser"
 import cors from "cors"; // Cors allow a different client connects to the server
 import dotenv from "dotenv";
-console.log('before importing routes')
 import routes from "./routes/index.js";
 
 const app = express()
-console.log('express app created')
 
 dotenv.config({path: '.env'})
 
 // connect to mongo
-(async () => {
+const bd = (async () => {
     await mongoose.connect(process.env.DB_URL)
         .then(()=>{
             console.log("DB connection successful.");
