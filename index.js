@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static('uploads'))
 
 // Define the domins that are allow to receive requests (White List)
-const whiteList = [process.env.FRONTEND_URL]
+const whiteList = [process.env.FRONTEND_URL, 'https://dashboard.render.com', 'https://render.com', '']
 const corsOptions = {
     origin: (origin, callback) => {
         // check if the request is from a server that is in the white list 

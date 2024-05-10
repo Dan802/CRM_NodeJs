@@ -1,9 +1,9 @@
 import express from "express";
-// import { newCustomer, showCustomers, showCustomer, updateCustomer, deleteCustomer} from "./../controllers/customersController.js";
-import { deleteProduct, newProduct, searchProduct, showProduct, showProducts, updateProduct, uploadImage } from "./../controllers/productsController.js"
+import { newCustomer, showCustomers, showCustomer, updateCustomer, deleteCustomer} from "./../controllers/customersController.js";
+import { deleteProduct, newProduct, searchProduct, showProduct, showProducts, updateProduct, uploadImage } from "./../controllers/productsController.js";
 import { deleteOrder, newOrder, showOrder, showOrders, updateOrder } from "./../controllers/ordersController.js";
 import {singUpUser, authUser, token} from "./../controllers/usersController.js";
-import auth from './../middleware/auth.js' // middleware to protect routes
+import auth from './../middleware/auth.js'; // middleware to protect routes
 
 const router = express.Router()
 
@@ -14,19 +14,19 @@ router.get('/', (req, res) => {
 //#region CustomersController.js
 
     // Add new customers
-    // router.post('/customers', auth, newCustomer)
+    router.post('/customers', auth, newCustomer)
 
     // Get all the customers
-    // router.get('/customers', auth, showCustomers)
+    router.get('/customers', auth, showCustomers)
 
     // Show a specific customer
-    // router.get('/customers/:idCustomer', auth, showCustomer)
+    router.get('/customers/:idCustomer', auth, showCustomer)
 
     // update a specific customer
-    // router.put('/customers/:idCustomer', auth, updateCustomer)
+    router.put('/customers/:idCustomer', auth, updateCustomer)
 
     // Delete a specific customer
-    // router.delete('/customers/:idCustomer', auth, deleteCustomer)
+    router.delete('/customers/:idCustomer', auth, deleteCustomer)
 
 //#endregion
 
