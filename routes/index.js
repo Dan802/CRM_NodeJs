@@ -1,6 +1,6 @@
 import express from "express";
-import { newCustomer, showCustomers, showCustomer, updateCustomer, deleteCustomer} from "./../controllers/customersController.js";
 import { deleteProduct, newProduct, searchProduct, showProduct, showProducts, updateProduct, uploadImage } from "./../controllers/productsController.js";
+import { newCustomer, showCustomers, showCustomer, updateCustomer, deleteCustomer} from "../controllers/clientsController.js";
 import { deleteOrder, newOrder, showOrder, showOrders, updateOrder } from "./../controllers/ordersController.js";
 import {singUpUser, authUser, token} from "./../controllers/usersController.js";
 import auth from './../middleware/auth.js'; // middleware to protect routes
