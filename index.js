@@ -27,34 +27,6 @@ app.use(bodyParser.urlencoded({extended: true}))
 // Should be before Cors configuration
 app.use(express.static('uploads'))
 
-// express example
-const allowlist = [process.env.FRONTEND_URL, 'https://dashboard.render.com/*', 'https://crm-nodejs-aih7.onrender.com/*']
-var corsOptionsDelegate = function (req, callback) {
-    var corsOptions;
-    
-    if (allowlist.indexOf(req.header('Origin')) !== -1) {
-        corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-    } else {
-        corsOptions = { origin: false } // disable CORS for this request
-    }
-    callback(null, corsOptions) // callback expects two parameters: error and options
-}
-
-// Define the domins that are allow to receive requests (White List)
-const whiteList = [process.env.FRONTEND_URL, 'https://dashboard.render.com/*', 'https://crm-nodejs-aih7.onrender.com/*']
-const corsOptions = {
-    origin: (origin, callback) => {
-        // check if the request is from a server that is in the white list 
-        const exist = whiteList.some( domain => domain === origin)
-
-        if(exist) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }
-}
-
 const options = {
     "origin": [process.env.FRONTEND_URL, /.*\.render\.com.*/, /.*\.onrender\.com.*/],
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",

@@ -10,10 +10,13 @@ const router = express.Router()
 router.get('/', async (req, res) => {
     res.send('<a href="/juanfgonzalez.netlify.app">Hi, visit my portfolio clicking here.</a>')
 
-    const url = 'http://ipinfo.io/?format=jsonp&callback=getIP'
-
-    const resultado = await fetch(url); 
-    // resultado.json()
+    /*
+        const url = 'http://ipinfo.io/?format=jsonp&callback=getIP'
+        const resultado = await fetch(url); 
+        // resultado.json() 
+        // throws error but we can see the ip and host xd 
+        // useful to allow ip on cluster0 on mongodb - atlas
+    */
 })
 
 //#region CustomersController.js
@@ -22,7 +25,7 @@ router.get('/', async (req, res) => {
     router.post('/customers', auth, newCustomer)
 
     // Get all the customers
-    router.get('/customers', showCustomers) //todo: poner autenticación
+    router.get('/customers', auth, showCustomers) 
 
     // Show a specific customer
     router.get('/customers/:idCustomer', auth, showCustomer)
@@ -41,7 +44,7 @@ router.get('/', async (req, res) => {
     router.post('/products', auth, uploadImage, newProduct)
 
     // Show all the products
-    router.get('/products', showProducts) //todo: poner autenticación
+    router.get('/products', auth, showProducts) 
 
     // Show a specific product by their id
     router.get('/products/:idProduct', auth, showProduct)
@@ -61,7 +64,7 @@ router.get('/', async (req, res) => {
 
     router.post('/orders/new/:idUser', auth, newOrder)
 
-    router.get('/orders',  showOrders) //todo: poner autenticación
+    router.get('/orders', auth, showOrders) 
 
     router.get('/orders/:idOrder', auth, showOrder)
 
@@ -75,7 +78,7 @@ router.get('/', async (req, res) => {
 
     router.post('/create-account', singUpUser)
 
-    router.get('/users', getAllUsers)
+    router.get('/users', auth, getAllUsers)
 
     router.post('/log-in', authUser)
 
