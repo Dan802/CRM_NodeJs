@@ -7,8 +7,16 @@ import auth from './../middleware/auth.js'; // middleware to protect routes
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     res.send('<a href="/juanfgonzalez.netlify.app">Hi, visit my portfolio clicking here.</a>')
+
+    const url = 'http://ipinfo.io/?format=jsonp&callback=getIP'
+
+    const resultado = await fetch(url); 
+    console.log(resultado)
+    console.log(resultado.json())
+
+    // const servicios = await resultado.json();
 })
 
 //#region CustomersController.js
