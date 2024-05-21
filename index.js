@@ -10,16 +10,14 @@ const app = express()
 dotenv.config({path: '.env'})
 
 // connect to mongo
-const bd = (async () => {
-    await mongoose.connect(process.env.DB_URL)
-        .then(()=>{
-            console.log("DB connection successful.");
-            console.log('**********************************');
-        })
-        .catch((err)=>{
-            console.log(`DB connection error:${err}`);
-        });
-})()
+mongoose.connect(process.env.DB_URL)
+    .then(()=>{
+        console.log("DB connection successful.");
+        console.log('**********************************');
+    })
+    .catch((err)=>{
+        console.log(`DB connection error:${err}`);
+    });
 
 // Enable BodyParser
 app.use(bodyParser.json())
@@ -30,13 +28,11 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static('uploads'))
 
 // Define the domins that are allow to receive requests (White List)
-const whiteList = [process.env.FRONTEND_URL, 'https://master-manager.netlify.app']
+const whiteList = [process.env.FRONTEND_URL]
 const corsOptions = {
     origin: (origin, callback) => {
         // check if the request is from a server that is in the white list 
-        let exist = whiteList.some( domain => domain === origin)
-
-        exist = true
+        const exist = whiteList.some( domain => domain === origin)
 
         if(exist) {
             callback(null, true)
@@ -48,7 +44,8 @@ const corsOptions = {
 
 // Enable Cors
 // Allow a client to connect to another server for resource sharing
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
+app.use(cors())
 
 // app routes
 app.use('/', routes)

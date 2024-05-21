@@ -16,6 +16,23 @@ export async function singUpUser(req, res) {
     }
 }
 
+export async function getAllUsers(req, res, next) {
+    try {
+        
+        const users = await Users.find({})
+
+        if(users.length > 0) {
+            res.json(users)
+        } else {
+            res.json({message: 'There are no users yet.'})
+        }
+
+    } catch (error) {
+        console.log(error)
+        next()
+    }
+}
+
 export async function authUser(req, res, next) {
     const user = await Users.findOne({ email: req.body.email })
 
