@@ -44,8 +44,7 @@ const corsOptions = {
 
 // Enable Cors
 // Allow a client to connect to another server for resource sharing
-// app.use(cors(corsOptions))
-app.use(cors())
+app.use(cors(corsOptions))
 
 // app routes
 app.use('/', routes)
